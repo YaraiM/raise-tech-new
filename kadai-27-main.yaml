@@ -219,6 +219,7 @@ Resources:
       # SSMパラメーターストアから最新のAmazon Linux 2023のAMIを取得
       ImageId: '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64}}'
       InstanceType: t2.micro
+      KeyName: RaiseTechAWSNew
       IamInstanceProfile: !Ref EC2InstanceProfile
       SubnetId: !Ref PublicSubnet1
       SecurityGroupIds:
