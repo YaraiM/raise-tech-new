@@ -280,7 +280,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       Name: TestTargetGroup
-      Port: 80
+      Port: 8080
       Protocol: HTTP
       VpcId: !Ref VPC
       HealthCheckPath: /
@@ -294,7 +294,6 @@ Resources:
       TargetType: instance
       Targets:
         - Id: !Ref EC2Instance
-          Port: 8080
       Tags:
         - Key: Name
           Value: TestTargetGroup
