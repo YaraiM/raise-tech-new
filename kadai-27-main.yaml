@@ -29,7 +29,7 @@ Resources:
     Properties:
       VpcId: !Ref VPC
       CidrBlock: 10.0.1.0/24
-      AvailabilityZone: !Select [0, !GetAZs '']
+      AvailabilityZone: ap-northeast-1a
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
@@ -40,7 +40,7 @@ Resources:
     Properties:
       VpcId: !Ref VPC
       CidrBlock: 10.0.2.0/24
-      AvailabilityZone: !Select [1, !GetAZs '']
+      AvailabilityZone: ap-northeast-1c
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
@@ -51,7 +51,7 @@ Resources:
     Properties:
       VpcId: !Ref VPC
       CidrBlock: 10.0.3.0/24
-      AvailabilityZone: !Select [0, !GetAZs '']
+      AvailabilityZone: ap-northeast-1a
       MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
@@ -62,7 +62,7 @@ Resources:
     Properties:
       VpcId: !Ref VPC
       CidrBlock: 10.0.4.0/24
-      AvailabilityZone: !Select [1, !GetAZs '']
+      AvailabilityZone: ap-northeast-1c
       MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
@@ -249,7 +249,7 @@ Resources:
       AutoMinorVersionUpgrade: true
       ApplyImmediately: true
       StorageEncrypted: true
-    DeletionPolicy: Retain
+    DeletionPolicy: Delete
     UpdateReplacePolicy: Snapshot
   
   ALB:
@@ -304,3 +304,28 @@ Resources:
       DefaultActions:
         - Type: forward
           TargetGroupArn: !Ref TargetGroup
+
+Outputs:
+  VPCId:
+    Description: VPC ID
+    Value: !Ref VPC
+    Export:
+      Name: !Sub ${AWS::StackName}-VPC-ID
+  
+  ALBDNSName:
+    Description: ALB DNS Name
+    Value: !GetAtt ALB.DNSName
+    Export:
+      Name: !Sub ${AWS::StackName}-ALB-DNS
+    
+  EC2InstanceId:
+    Description: EC2 Instance ID
+    Value: !Ref EC2Instance
+    Export:
+      Name: !Sub ${AWS::StackName}-EC2-ID
+
+  RDSEndpoint:
+    Description: RDS Endpoint
+    Value: !GetAtt RDSInstance.Endpoint.Address
+    Export:
+      Name: !Sub ${AWS::StackName}-RDS-Endpoint
